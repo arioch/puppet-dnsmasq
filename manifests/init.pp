@@ -27,7 +27,7 @@ class dnsmasq (
   Variant[
     Stdlib::Ip::Address::Nosubnet,
     Array[Stdlib::Ip::Address::Nosubnet]
-  ] $nameserver = [ '1.1.1.1', '1.0.0.1' ], # TODO: Hiera
+  ] $nameserver,
 ) {
   class { '::dnsmasq::package': }
   -> class { '::dnsmasq::config': }

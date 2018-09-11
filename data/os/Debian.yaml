@@ -1,3 +1,1 @@
 ---
-dnsmasq::package_name: 'dnsmasq'
-dnsmasq::service_name: 'dnsmasq'
