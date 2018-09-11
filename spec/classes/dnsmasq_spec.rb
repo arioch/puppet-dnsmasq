@@ -74,6 +74,10 @@ describe 'dnsmasq' do
           end
 
           it {
+            is_expected.to contain_file('/etc/dnsmasq.d/hosts.conf')
+          }
+
+          it {
             is_expected.to contain_file('/etc/dnsmasq.hosts').with(
               'content' => /^10.10.10.10 test1$/,
             )
@@ -106,6 +110,36 @@ describe 'dnsmasq' do
           it {
             is_expected.to contain_file('/etc/dnsmasq.hosts').with(
               'content' => /^30.30.30.30 test6$/,
+            )
+          }
+        end
+
+        context 'invalid input' do
+          let(:params) do
+            {
+              hosts: {}
+            }
+          end
+
+          it { is_expected.not_to compile }
+        end
+
+        context 'disabled' do
+          let(:params) do
+            {
+              hosts: []
+            }
+          end
+
+          it {
+            is_expected.to contain_file('/etc/dnsmasq.hosts').with(
+              'ensure' => 'absent',
+            )
+          }
+
+          it {
+            is_expected.to contain_file('/etc/dnsmasq.d/hosts.conf').with(
+              'ensure' => 'absent',
             )
           }
         end
@@ -194,7 +228,6 @@ describe 'dnsmasq' do
           )
         }
       end
-
     end
   end
 end

@@ -27,27 +27,27 @@ class dnsmasq::config {
     content => epp('dnsmasq/dnsmasq.resolv.epp'),
   }
 
-  file { '/etc/dnsmasq.d/hosts.conf':
-    ensure => file,
-    group  => 0,
-    mode   => '0644',
-    owner  => 0,
+  $hosts_ensure = $::dnsmasq::hosts ? {
+    []      => 'absent',
+    default => 'file',
   }
 
-  if $::dnsmasq::hosts != {} {
-    file { '/etc/dnsmasq.hosts':
-      ensure  => file,
-      group   => 0,
-      mode    => '0644',
-      owner   => 0,
-      content => epp(
-        'dnsmasq/dnsmasq.hosts.epp',
-        { 'hosts' => $::dnsmasq::hosts }
-      ),
-    }
-  } else {
-    file { '/etc/dnsmasq.hosts':
-      ensure => absent,
-    }
+  file { '/etc/dnsmasq.d/hosts.conf':
+    ensure  => $hosts_ensure,
+    group   => 0,
+    mode    => '0644',
+    owner   => 0,
+    source  => 'puppet:///modules/dnsmasq/hosts.conf',
+  }
+
+  file { '/etc/dnsmasq.hosts':
+    ensure  => $hosts_ensure,
+    group   => 0,
+    mode    => '0644',
+    owner   => 0,
+    content => epp(
+      'dnsmasq/dnsmasq.hosts.epp',
+      { 'hosts' => $::dnsmasq::hosts }
+    ),
   }
 }
