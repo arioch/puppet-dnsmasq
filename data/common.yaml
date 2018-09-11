@@ -1,0 +1,11 @@
+---
+dnsmasq::conf_dir:          '/etc/dnsmasq.d'
+dnsmasq::hosts:             []
+dnsmasq::package_ensure:    'present'
+dnsmasq::service_enable:    true
+dnsmasq::service_ensure:    'running'
+dnsmasq::service_hasstatus: true
+
+dnsmasq::nameserver:
+  - 1.1.1.1
+  - 1.0.0.1

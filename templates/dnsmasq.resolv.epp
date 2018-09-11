@@ -1,0 +1,7 @@
+<% if $dnsmasq::nameserver =~ Array { -%>
+<% $dnsmasq::nameserver.sort.unique.each |$ns| { -%>
+nameserver <%= $ns %>
+<% } -%>
+<% } else { -%>
+nameserver <%= $dnsmasq::nameserver %>
+<% } -%>

@@ -1,0 +1,7 @@
+<% $hosts.sort.each |$i| { -%>
+<% $i.each |$ip, $aliases| { -%>
+<% $aliases.sort.each |$a| { -%>
+<%= $ip %> <%= $a %>
+<% } -%>
+<% } -%>
+<% } -%>
