@@ -1,9 +1,5 @@
 # dnsmasq::config
 #
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   include dnsmasq::config
 class dnsmasq::config {
   file { '/etc/dnsmasq.d':
     ensure => directory,
@@ -33,11 +29,11 @@ class dnsmasq::config {
   }
 
   file { '/etc/dnsmasq.d/hosts.conf':
-    ensure  => $hosts_ensure,
-    group   => 0,
-    mode    => '0644',
-    owner   => 0,
-    source  => 'puppet:///modules/dnsmasq/hosts.conf',
+    ensure => $hosts_ensure,
+    group  => 0,
+    mode   => '0644',
+    owner  => 0,
+    source => 'puppet:///modules/dnsmasq/hosts.conf',
   }
 
   file { '/etc/dnsmasq.hosts':

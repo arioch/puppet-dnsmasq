@@ -3,7 +3,7 @@
 # @summary Setup and manage dnsmasq.
 #
 # @example
-#   include dnsmasq
+#   include ::dnsmasq
 #
 # @param conf_dir
 # @param nameserver
