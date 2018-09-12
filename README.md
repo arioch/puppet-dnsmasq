@@ -11,8 +11,9 @@ The README template below provides a starting point with details about what info
 2. [Setup - The basics of getting started with dnsmasq](#setup)
     * [Beginning with dnsmasq](#beginning-with-dnsmasq)
 3. [Usage - Configuration options and additional functionality](#usage)
-	* [Adjust upstream resolving nameservers](#adjust-upstream-resolving-nameservers)
-	* [PXE boot environment](#pxe-boot-environment)
+  * [Adjust upstream resolving nameservers](#adjust-upstream-resolving-nameservers)
+  * [Local nameserver](#local-nameserver)
+  * [PXE boot environment](#pxe-boot-environment)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development - Guide for contributing to the module](#development)
 
@@ -56,6 +57,35 @@ dnsmasq::nameserver:
   - 1.0.0.1
 ```
 
+### Local nameserver
+
+The snippet below configures Dnsmasq to serve as a local nameserver.
+
+```
+class { '::dnsmasq':
+  hosts => [
+    '10.10.10.10' => ['test1'],
+    '20.20.20.20' => ['test2', 'test3'],
+  ],
+}
+```
+
+Using Hiera:
+
+```
+include ::dnsmasq
+```
+
+```
+---
+dnsmasq::hosts:
+  10.10.10.10:
+    - test1
+  20.20.20.20:
+    - test2
+    - test3
+```
+
 ### PXE boot environment
 
 ```
@@ -63,16 +93,16 @@ class { '::dnsmasq::pxe':
   dhcp_boot    => 'pxelinux.0',
   dhcp_gateway => '10.10.10.1',
   tftp_server  => '10.10.10.1',
-  
+
   dhcp_range   => {
-  	from    => '10.10.10.10',
-  	to      => '10.10.10.20',
-  	timeout => '15m',
+    from    => '10.10.10.10',
+    to      => '10.10.10.20',
+    timeout => '15m',
   },
-  
+
   dhcp_host    => {
-  	'AA:BB:CC:DD:EE:FF' => '10.10.10.10',
-  	'AA:BB:CC:DD:EE:00' => '10.10.10.20',
+    'AA:BB:CC:DD:EE:FF' => '10.10.10.10',
+    'AA:BB:CC:DD:EE:00' => '10.10.10.20',
   },
 }
 ```
