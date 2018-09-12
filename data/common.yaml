@@ -11,3 +11,17 @@ dnsmasq::service_name:      'dnsmasq'
 dnsmasq::nameserver:
   - 1.1.1.1
   - 1.0.0.1
+
+dnsmasq::pxe::dhcp_boot:    'pxelinux.0'
+dnsmasq::pxe::dhcp_gateway: '10.10.10.1'
+dnsmasq::pxe::dhcp_host:    []
+dnsmasq::pxe::dhcp_ignore:  'tag:#known'
+dnsmasq::pxe::dns_server:   '10.10.10.1'
+dnsmasq::pxe::tftp:         true
+dnsmasq::pxe::tftp_root:    '/var/lib/tftp'
+dnsmasq::pxe::tftp_server:  '10.10.10.1'
+
+dnsmasq::pxe::dhcp_range:
+  from:    '10.10.10.10'
+  to:      '10.10.10.20'
+  timeout: '15m'

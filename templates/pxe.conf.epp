@@ -1,0 +1,17 @@
+dhcp-ignore=<%= $::dnsmasq::pxe::dhcp_ignore %>
+dhcp-range=<%= $::dnsmasq::pxe::dhcp_range['from'] %>,<%= $::dnsmasq::pxe::dhcp_range['to'] %>,<%= $::dnsmasq::pxe::dhcp_range['timeout'] %>
+dhcp-option=3,<%= $::dnsmasq::pxe::dhcp_gateway %> # gateway
+dhcp-option=6,<%= $::dnsmasq::pxe::dns_server %> # dns
+dhcp-option=66,<%= $::dnsmasq::pxe::tftp_server %> # tftp
+dhcp-boot=<%= $::dnsmasq::pxe::dhcp_boot %>
+
+<% if $::dnsmasq::pxe::tftp == true { -%>
+enable-tftp
+tftp-root=<%= $::dnsmasq::pxe::tftp_root %>
+<% } -%>
+
+<% $::dnsmasq::pxe::dhcp_host.sort.each |$i| { -%>
+<% $i.each |$macaddress, $ipaddress| { -%>
+dhcp-host=<%= $macaddress %>,<%= $ipaddress %>
+<% } -%>
+<% } -%>
